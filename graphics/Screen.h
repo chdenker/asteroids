@@ -7,6 +7,11 @@
 
 namespace graphics {
 
+struct Point {
+    float x;
+    float y;
+};
+
 struct Color {
     int red;
     int green;
@@ -19,8 +24,8 @@ public:
     ~Screen() = default;
 
     void clear(Color col);
+    void render_line(Point p1, Point p2, Color col);
     void render_rectangle(int x, int y, int width, int height, Color col);
-    void render_triangle();
     void draw();
 
 private:

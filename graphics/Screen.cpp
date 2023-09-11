@@ -12,14 +12,14 @@ void Screen::clear(Color col)
     gmod->clear(col.red, col.green, col.blue);
 }
 
+void Screen::render_line(Point p1, Point p2, Color col)
+{
+    gmod->render_line(p1.x, p1.y, p2.x, p2.y, col.red, col.green, col.blue);
+}
+
 void Screen::render_rectangle(int x, int y, int width, int height, Color col)
 {
     gmod->render_rectangle(x, y, width, height, col.red, col.green, col.blue);
-}
-
-void Screen::render_triangle()
-{
-    gmod->render_triangle();
 }
 
 void Screen::draw()

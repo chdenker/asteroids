@@ -45,31 +45,17 @@ void GModule::clear(int red, int green, int blue)
 	SDL_RenderClear(renderer);
 }
 
+void GModule::render_line(int x1, int y1, int x2, int y2, int red, int green, int blue)
+{
+	SDL_SetRenderDrawColor(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
+	SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
+}
+
 void GModule::render_rectangle(int x, int y, int width, int height, int red, int green, int blue)
 {
     SDL_Rect rect{ x, y, width, height };
 	SDL_SetRenderDrawColor(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
 	SDL_RenderFillRect(renderer, &rect);
-}
-
-void GModule::render_triangle()
-{
-	std::array<SDL_Point, 4> points{
-		SDL_Point{150, 100}, 
-		SDL_Point{130, 150},
-		SDL_Point{170, 150},
-		SDL_Point{150, 100}, 
-	};
-	#if 0
-	SDL_Point points[4] = {
-		{150, 100}, 
-		{100, 150},
-		{200, 150},
-		{150, 100}, 
-	};
-	#endif
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
-	SDL_RenderDrawLines(renderer, points.data(), points.size());
 }
 
 void GModule::draw()
