@@ -16,7 +16,10 @@ auto constexpr PLAYER_WIDTH = 20;
 auto constexpr PLAYER_HEIGHT = 30;
 
 auto constexpr MAX_ASTEROIDS = 30;
+
 auto constexpr MAX_PLAYER_SPEED = 50;
+auto constexpr PLAYER_ACCELERATION = 7;
+auto constexpr PLAYER_ROT_SPEED = 0.1;
 
 auto constexpr ASTEROID_INITIAL_SPEED = 50;
 
