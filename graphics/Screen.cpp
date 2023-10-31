@@ -22,6 +22,12 @@ void Screen::render_rectangle(int x, int y, int width, int height, Color col)
     gmod->render_rectangle(x, y, width, height, col.red, col.green, col.blue);
 }
 
+void Screen::render_circle(int x, int y, int radius, Color col)
+{
+    gmod->render_circle(x, y, radius, col.red, col.green, col.blue);
+}
+
+
 void Screen::draw()
 {
     gmod->draw();

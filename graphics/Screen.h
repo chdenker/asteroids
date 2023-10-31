@@ -26,6 +26,7 @@ public:
     void clear(Color col);
     void render_line(Point p1, Point p2, Color col);
     void render_rectangle(int x, int y, int width, int height, Color col);
+    void render_circle(int x, int y, int radius, Color col);
     void draw();
 
 private:

@@ -2,12 +2,10 @@
 
 #include "../Constants.h"
 
-#include <SDL2/SDL_pixels.h>
-#include <SDL2/SDL_rect.h>
-#include <SDL2/SDL_render.h>
+#include <SDL2/SDL.h>
+
 #include <cstdio>
 #include <cstdlib>
-#include <array>
 
 GModule::GModule(int width, int height)
 {
@@ -57,6 +55,42 @@ void GModule::render_rectangle(int x, int y, int width, int height, int red, int
 	SDL_SetRenderDrawColor(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
 	SDL_RenderFillRect(renderer, &rect);
 }
+
+void GModule::render_circle(int x0, int y0, int radius, int red, int green, int blue)
+{
+	// Midpoint circle algorithm
+	// Shamelessly copied from https://en.wikipedia.org/w/index.php?title=Midpoint_circle_algorithm&oldid=889172082#C_example
+	int x = radius-1;
+    int y = 0;
+    int dx = 1;
+    int dy = 1;
+    int err = dx - (radius << 1);
+
+	SDL_SetRenderDrawColor(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
+    while (x >= y) {
+        SDL_RenderDrawPoint(renderer, x0 + x, y0 + y);
+        SDL_RenderDrawPoint(renderer, x0 + y, y0 + x);
+        SDL_RenderDrawPoint(renderer, x0 - y, y0 + x);
+        SDL_RenderDrawPoint(renderer, x0 - x, y0 + y);
+        SDL_RenderDrawPoint(renderer, x0 - x, y0 - y);
+        SDL_RenderDrawPoint(renderer, x0 - y, y0 - x);
+        SDL_RenderDrawPoint(renderer, x0 + y, y0 - x);
+        SDL_RenderDrawPoint(renderer, x0 + x, y0 - y);
+
+        if (err <= 0) {
+            y++;
+            err += dy;
+            dy += 2;
+        }
+        
+        if (err > 0) {
+            x--;
+            dx += 2;
+            err += dx - (radius << 1);
+        }
+    }
+}
+
 
 void GModule::draw()
 {

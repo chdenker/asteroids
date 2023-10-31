@@ -70,7 +70,7 @@ void render_player(Screen& scr, game::Player& p)
 
 void render_asteroid(Screen& scr, game::Asteroid& ast)
 {
-    scr.render_rectangle(ast.x, ast.y, 100, 100, { 255, 0, 0 });
+    scr.render_circle(ast.x, ast.y, 100, { 255, 255, 255 });
 }
 
 } // namespace graphics
