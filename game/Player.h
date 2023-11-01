@@ -6,11 +6,13 @@
 
 #include "Hitbox.h"
 
+#include <vector>
+
 namespace game {
 
 struct Rocket {
-    uint x;
-    uint y;
+    float x;
+    float y;
     double angle;
     uint speed;
 };
@@ -20,7 +22,7 @@ public:
     Player(math::Vec2 position, double angle);
     ~Player() = default;
 
-    Rocket shoot();
+    void shoot();
 
     Hitbox get_hitbox();
     bool has_collided_with(Hitbox h);
@@ -34,6 +36,7 @@ public:
     int speed;
     uint score;
     uint lives;
+    std::vector<Rocket> rockets;
     
 private:
     double angle;

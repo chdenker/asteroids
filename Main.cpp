@@ -42,6 +42,9 @@ void process_input(Input& in)
 		case SDLK_DOWN:
 			in.down = true;
 			break;
+		case SDLK_SPACE:
+			in.space = true;
+			break;
 		case SDLK_ESCAPE:
 			game_running = false;
 			break;
@@ -65,6 +68,10 @@ void update(Input& in, game::Player& player, std::vector<game::Asteroid>& astero
 		player.decr_angle(consts::PLAYER_ROT_SPEED);
 	} else if (in.right) {
 		player.incr_angle(consts::PLAYER_ROT_SPEED);
+	}
+
+	if (in.space) {
+		player.shoot();
 	}
 
 	math::Vec2& pos = player.pos;

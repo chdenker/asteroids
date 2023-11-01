@@ -13,6 +13,7 @@ Player::Player(math::Vec2 position, double angle)
   speed{0},
   score{0},
   lives{3},
+  rockets{},
   angle{angle}
 {}
 
@@ -38,10 +39,10 @@ Hitbox Player::get_hitbox()
     // return std::move(Hitbox{x, y, consts::PLAYER_WIDTH, consts::PLAYER_HEIGHT});
 }
 
-Rocket Player::shoot()
+void Player::shoot()
 {
-    return {};
-    // return std::move(Rocket{ x, y, angle, consts::ROCKET_SPEED });
+    // rockets.emplace_back(pos.x, pos.y, angle, consts::ROCKET_SPEED);
+    rockets.push_back(Rocket{pos.x, pos.y, angle, consts::ROCKET_SPEED});
 }
 
 } // namespace game

@@ -6,8 +6,6 @@
 #include <cmath>
 #include <utility>
 
-#include <iostream>
-
 namespace graphics {
 
 std::pair<float, float> compute_centroid(std::array<Point, 4> vertices)
@@ -21,6 +19,13 @@ std::pair<float, float> compute_centroid(std::array<Point, 4> vertices)
     float centroid_x {sum_x / 4};
     float centroid_y {sum_y / 4};
     return { centroid_x, centroid_y };
+}
+
+void render_rockets(Screen& scr, std::vector<game::Rocket>& rockets)
+{
+    for (game::Rocket const& r : rockets) {
+        scr.render_rectangle(r.x, r.y, 5, 10, { 255, 255, 255 });
+    }
 }
 
 void render_player(Screen& scr, game::Player& p)
@@ -66,6 +71,8 @@ void render_player(Screen& scr, game::Player& p)
     scr.render_line(vertices[1], vertices[0], col); // bottom left -> top
 
     scr.render_rectangle(p.pos.x, p.pos.y, 5, 5, { 255, 255, 0 });  // draw pos
+
+    render_rockets(scr, p.rockets);
 }
 
 void render_asteroid(Screen& scr, game::Asteroid& ast)
