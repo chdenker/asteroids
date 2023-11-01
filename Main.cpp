@@ -88,7 +88,11 @@ void update(Input& in, game::Player& player, std::vector<game::Asteroid>& astero
 
 	// Apply translation
 	pos.x = pos.x + consts::PLAYER_ACCELERATION * trans_x;
+	while (pos.x - consts::PLAYER_SIZE > consts::SCR_WIDTH) pos.x = -consts::PLAYER_SIZE;
+	while (pos.x + consts::PLAYER_SIZE < 0) pos.x = consts::SCR_WIDTH + consts::PLAYER_SIZE;
 	pos.y = pos.y + consts::PLAYER_ACCELERATION * trans_y;
+	while (pos.y - consts::PLAYER_SIZE > consts::SCR_HEIGHT) pos.y = -consts::PLAYER_SIZE;
+	while (pos.y + consts::PLAYER_SIZE < 0) pos.y = consts::SCR_HEIGHT + consts::PLAYER_SIZE;
 
 	in = Input{};	// Reset
 }
@@ -117,7 +121,7 @@ int main()
         for (auto& a : asteroids) graphics::render_asteroid(scr, a);
 
         scr.draw();
-		SDL_Delay(60);	// TODO: Add timing logic
+		// SDL_Delay(60);	// TODO: Add timing logic
     }
 
     return 0;

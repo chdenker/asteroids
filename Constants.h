@@ -12,8 +12,7 @@ auto constexpr GAME_TITLE = "Asteroids";
 auto constexpr SCR_WIDTH = 1024;
 auto constexpr SCR_HEIGHT = 768;
 
-auto constexpr PLAYER_WIDTH = 20;
-auto constexpr PLAYER_HEIGHT = 30;
+auto constexpr PLAYER_SIZE = 90;
 
 auto constexpr MAX_ASTEROIDS = 30;
 

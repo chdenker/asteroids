@@ -48,10 +48,9 @@ void render_player(Screen& scr, game::Player& p)
         v.y = rot_sin * x + rot_cos * y;
     }
 
-    int scale = 90;
     for (Point& v : vertices) {
-        v.x *= scale;
-        v.y *= scale;
+        v.x *= consts::PLAYER_SIZE;
+        v.y *= consts::PLAYER_SIZE;
     }
 
     // Translate the triangle vertices such that
