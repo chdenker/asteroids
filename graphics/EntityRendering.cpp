@@ -24,7 +24,7 @@ std::pair<float, float> compute_centroid(std::array<Point, 4> vertices)
 void render_rockets(Screen& scr, std::vector<game::Rocket>& rockets)
 {
     for (game::Rocket const& r : rockets) {
-        scr.render_rectangle(r.x, r.y, 5, 10, { 255, 255, 255 });
+        scr.render_rectangle(r.pos.x, r.pos.y, 5, 10, { 255, 255, 255 });
     }
 }
 

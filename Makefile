@@ -5,7 +5,7 @@ LDFLAGS=-lSDL2
 all: asteroids
 
 asteroids:
-	$(CC) $(CFLAGS) Main.cpp game/Asteroid.cpp game/Player.cpp graphics/GModule.cpp graphics/EntityRendering.cpp graphics/Screen.cpp -o asteroids $(LDFLAGS)
+	$(CC) $(CFLAGS) Main.cpp game/Asteroid.cpp game/Player.cpp game/Rocket.cpp graphics/GModule.cpp graphics/EntityRendering.cpp graphics/Screen.cpp -o asteroids $(LDFLAGS)
 
 clean:
 	rm asteroids

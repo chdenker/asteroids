@@ -74,25 +74,7 @@ void update(Input& in, game::Player& player, std::vector<game::Asteroid>& astero
 		player.shoot();
 	}
 
-	math::Vec2& pos = player.pos;
-	math::Vec2& dir = player.dir;
-
-	// Get current direction vector (dir_x,dir_y) first...
-	float dir_x = 0.0f;
-	float dir_y = 1.0f;
-	// ... then rotate by the current angle
-	double rot_cos = std::cos(player.get_angle());
-    double rot_sin = std::sin(player.get_angle());
-	float trans_x = rot_cos * dir_x - rot_sin * dir_y;
-	float trans_y = rot_sin * dir_x + rot_cos * dir_y;
-
-	// Apply translation
-	pos.x = pos.x + consts::PLAYER_ACCELERATION * trans_x;
-	while (pos.x - consts::PLAYER_SIZE > consts::SCR_WIDTH) pos.x = -consts::PLAYER_SIZE;
-	while (pos.x + consts::PLAYER_SIZE < 0) pos.x = consts::SCR_WIDTH + consts::PLAYER_SIZE;
-	pos.y = pos.y + consts::PLAYER_ACCELERATION * trans_y;
-	while (pos.y - consts::PLAYER_SIZE > consts::SCR_HEIGHT) pos.y = -consts::PLAYER_SIZE;
-	while (pos.y + consts::PLAYER_SIZE < 0) pos.y = consts::SCR_HEIGHT + consts::PLAYER_SIZE;
+	player.update();
 
 	in = Input{};	// Reset
 }

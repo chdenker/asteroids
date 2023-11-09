@@ -1,21 +1,14 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "../Constants.h"
 #include "../Utils.h"
 
 #include "Hitbox.h"
+#include "Rocket.h"
 
 #include <vector>
 
 namespace game {
-
-struct Rocket {
-    float x;
-    float y;
-    double angle;
-    uint speed;
-};
 
 class Player {
 public:
@@ -24,12 +17,16 @@ public:
 
     void shoot();
 
+    math::Vec2 get_top_position();
+
     Hitbox get_hitbox();
     bool has_collided_with(Hitbox h);
 
     inline double get_angle() { return angle; }
     void incr_angle(double val);
     void decr_angle(double val);
+
+    void update();
 
     math::Vec2 pos;
     math::Vec2 dir;
