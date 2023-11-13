@@ -89,13 +89,13 @@ int main()
     std::vector<game::Asteroid> asteroids{};
     asteroids.reserve(consts::MAX_ASTEROIDS);
 
-	asteroids.emplace_back(400, 400, 0);
+    asteroids.emplace_back(math::Vec2{400.0f, 400.0f}, 0, game::Asteroid::Size::LARGE);
 
     game_running = true;
     while (game_running) {
         process_input(in);
 
-		update(in, player, asteroids);
+        update(in, player, asteroids);
 
         scr.clear({0, 0, 0});
 
@@ -103,7 +103,7 @@ int main()
         for (auto& a : asteroids) graphics::render_asteroid(scr, a);
 
         scr.draw();
-		// SDL_Delay(60);	// TODO: Add timing logic
+        // SDL_Delay(60);	// TODO: Add timing logic
     }
 
     return 0;

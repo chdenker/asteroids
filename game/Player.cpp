@@ -55,8 +55,7 @@ void Player::decr_angle(double val)
 
 Hitbox Player::get_hitbox()
 {
-    return {};
-    // return std::move(Hitbox{x, y, consts::PLAYER_WIDTH, consts::PLAYER_HEIGHT});
+    return Hitbox{pos.x - consts::PLAYER_SIZE / 2, pos.y - consts::PLAYER_SIZE / 4, consts::PLAYER_SIZE, consts::PLAYER_SIZE};
 }
 
 void Player::shoot()
@@ -68,22 +67,22 @@ void Player::shoot()
 
 void Player::update()
 {
-	// Get current direction vector (dir_x,dir_y) first...
-	float dir_x = dir.x;
-	float dir_y = dir.y;
-	// ... then rotate by the current angle
-	double rot_cos = std::cos(angle);
+    // Get current direction vector (dir_x,dir_y) first...
+    float dir_x = dir.x;
+    float dir_y = dir.y;
+    // ... then rotate by the current angle
+    double rot_cos = std::cos(angle);
     double rot_sin = std::sin(angle);
-	float trans_x = rot_cos * dir_x - rot_sin * dir_y;
-	float trans_y = rot_sin * dir_x + rot_cos * dir_y;
+    float trans_x = rot_cos * dir_x - rot_sin * dir_y;
+    float trans_y = rot_sin * dir_x + rot_cos * dir_y;
 
-	// Apply translation
-	pos.x = pos.x + consts::PLAYER_ACCELERATION * trans_x;
-	while (pos.x - consts::PLAYER_SIZE > consts::SCR_WIDTH) pos.x = -consts::PLAYER_SIZE;
-	while (pos.x + consts::PLAYER_SIZE < 0) pos.x = consts::SCR_WIDTH + consts::PLAYER_SIZE;
-	pos.y = pos.y + consts::PLAYER_ACCELERATION * trans_y;
-	while (pos.y - consts::PLAYER_SIZE > consts::SCR_HEIGHT) pos.y = -consts::PLAYER_SIZE;
-	while (pos.y + consts::PLAYER_SIZE < 0) pos.y = consts::SCR_HEIGHT + consts::PLAYER_SIZE;
+    // Apply translation
+    pos.x = pos.x + consts::PLAYER_ACCELERATION * trans_x;
+    while (pos.x - consts::PLAYER_SIZE > consts::SCR_WIDTH) pos.x = -consts::PLAYER_SIZE;
+    while (pos.x + consts::PLAYER_SIZE < 0) pos.x = consts::SCR_WIDTH + consts::PLAYER_SIZE;
+    pos.y = pos.y + consts::PLAYER_ACCELERATION * trans_y;
+    while (pos.y - consts::PLAYER_SIZE > consts::SCR_HEIGHT) pos.y = -consts::PLAYER_SIZE;
+    while (pos.y + consts::PLAYER_SIZE < 0) pos.y = consts::SCR_HEIGHT + consts::PLAYER_SIZE;
 
     for (auto it = rockets.begin(); it != rockets.end(); ) {
         Rocket& r = *it;    

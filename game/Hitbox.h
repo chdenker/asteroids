@@ -1,13 +1,16 @@
 #ifndef HITBOX_H
 #define HITBOX_H
 
-#include "../Constants.h"
+#include "../Utils.h"
+
+namespace game {
 
 struct Hitbox {
-    uint x;
-    uint y;
+    math::Vec2 pos;
     uint width;
     uint height;
 };
+
+}   // namespace game
 
 #endif

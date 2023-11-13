@@ -56,11 +56,18 @@ void GModule::render_rectangle(int x, int y, int width, int height, int red, int
 	SDL_RenderFillRect(renderer, &rect);
 }
 
+void GModule::render_unfilled_rectangle(int x, int y, int width, int height, int red, int green, int blue)
+{
+    SDL_Rect rect{ x, y, width, height };
+	SDL_SetRenderDrawColor(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
+    SDL_RenderDrawRect(renderer, &rect);    
+}
+
 void GModule::render_circle(int x0, int y0, int radius, int red, int green, int blue)
 {
 	// Midpoint circle algorithm
 	// Shamelessly copied from https://en.wikipedia.org/w/index.php?title=Midpoint_circle_algorithm&oldid=889172082#C_example
-	int x = radius-1;
+	int x = radius - 1;
     int y = 0;
     int dx = 1;
     int dy = 1;

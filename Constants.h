@@ -11,6 +11,9 @@ auto constexpr SCR_HEIGHT = 768;
 auto constexpr PLAYER_SIZE = 90;
 
 auto constexpr MAX_ASTEROIDS = 30;
+auto constexpr ASTEROID_SIZE_LARGE = 200;
+auto constexpr ASTEROID_SIZE_MEDIUM = 100;
+auto constexpr ASTEROID_SIZE_SMALL = 50;
 
 auto constexpr PLAYER_ACCELERATION = 3;
 auto constexpr PLAYER_ROT_SPEED = 0.1;

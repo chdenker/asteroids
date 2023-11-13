@@ -21,6 +21,11 @@ std::pair<float, float> compute_centroid(std::array<Point, 4> vertices)
     return { centroid_x, centroid_y };
 }
 
+void render_hitbox(Screen& scr, game::Hitbox h, Color col)
+{
+    scr.render_unfilled_rectangle(h.pos.x, h.pos.y, h.width, h.height, col);
+}
+
 void render_rockets(Screen& scr, std::vector<game::Rocket>& rockets)
 {
     for (game::Rocket const& r : rockets) {
@@ -72,11 +77,21 @@ void render_player(Screen& scr, game::Player& p)
     scr.render_rectangle(p.pos.x, p.pos.y, 5, 5, { 255, 255, 0 });  // draw pos
 
     render_rockets(scr, p.rockets);
+
+    render_hitbox(scr, p.get_hitbox(), { 0, 0, 255 });
 }
 
 void render_asteroid(Screen& scr, game::Asteroid& ast)
 {
-    scr.render_circle(ast.x, ast.y, 100, { 255, 255, 255 });
+    int radius = 0;
+    switch (ast.size) {
+    case game::Asteroid::Size::LARGE: radius = consts::ASTEROID_SIZE_LARGE / 2; break;
+    case game::Asteroid::Size::MEDIUM: radius = consts::ASTEROID_SIZE_MEDIUM / 2; break;
+    case game::Asteroid::Size::SMALL: radius = consts::ASTEROID_SIZE_SMALL / 2; break;
+    case game::Asteroid::Size::DESTROYED: return; // Don't render asteroid
+    }
+    scr.render_circle(ast.pos.x, ast.pos.y, radius, { 255, 255, 255 });
+    render_hitbox(scr, ast.get_hitbox(), { 255, 0, 0 });
 }
 
 } // namespace graphics

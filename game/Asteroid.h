@@ -4,6 +4,8 @@
 #include "../Constants.h"
 #include "../Utils.h"
 
+#include "Hitbox.h"
+
 #include <cstdint>
 
 namespace game {
@@ -14,13 +16,14 @@ public:
         LARGE, MEDIUM, SMALL, DESTROYED
     };
 
-    Asteroid(uint x, uint y, uint angle, uint speed = consts::ASTEROID_INITIAL_SPEED);
+    Asteroid(math::Vec2 pos, uint angle, Size size = Size::LARGE, uint speed = consts::ASTEROID_INITIAL_SPEED);
     Asteroid(Asteroid const& a) = default;
 
     ~Asteroid() = default;
 
-    uint x;
-    uint y;
+    Hitbox get_hitbox();
+
+    math::Vec2 pos;
     uint angle;
     uint speed;
     Size size;
