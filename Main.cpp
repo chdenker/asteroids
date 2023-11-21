@@ -1,5 +1,6 @@
 #include "Constants.h"
 
+#include "game/Hitbox.h"
 #include "game/Player.h"
 #include "game/Asteroid.h"
 
@@ -11,7 +12,6 @@
 
 #include <memory>
 #include <vector>
-#include <cmath>
 
 bool game_running = false;
 
@@ -56,6 +56,12 @@ void process_input(Input& in)
 	}
 }
 
+bool collides_with(game::Hitbox const& a, game::Hitbox const& b)
+{
+	return (a.pos.x < b.pos.x + b.width) && (a.pos.x + a.width > b.pos.x) 
+		&& (a.pos.y < b.pos.y + b.height) && (a.pos.y + a.height > b.pos.y);
+}
+
 void update(Input& in, game::Player& player, std::vector<game::Asteroid>& asteroids)
 {
 	if (in.up) {
@@ -76,6 +82,22 @@ void update(Input& in, game::Player& player, std::vector<game::Asteroid>& astero
 
 	player.update();
 
+	game::Hitbox player_hbox = player.get_hitbox();
+	for (auto const& ast : asteroids) {
+		game::Hitbox ast_hbox = ast.get_hitbox();
+		if (collides_with(player_hbox, ast_hbox)) {
+			// TODO: Game over
+		}
+		for (game::Rocket& r : player.rockets) {
+			game::Hitbox r_hbox = r.get_hitbox();
+			if (collides_with(r_hbox, ast_hbox)) {
+				// TODO: Destroy asteroid and rocket, add points to player's score
+				player.score += consts::ASTEROID_SCORE;
+				r.exploded = true;
+			}
+		}
+	}
+
 	in = Input{};	// Reset
 }
 
@@ -85,7 +107,8 @@ int main()
     graphics::Screen scr{consts::SCR_WIDTH, consts::SCR_HEIGHT, std::move(gmod)};
     Input in{};
 
-    game::Player player{math::Vec2{500, 300}, 0};
+    // game::Player player{math::Vec2{500, 300}, 0};
+    game::Player player{math::Vec2{700, 300}, 0};
     std::vector<game::Asteroid> asteroids{};
     asteroids.reserve(consts::MAX_ASTEROIDS);
 

@@ -8,7 +8,7 @@ Asteroid::Asteroid(math::Vec2 pos, uint angle, Size size, uint speed)
 : pos{pos}, angle{angle}, speed{speed}, size{size}
 {}
 
-Hitbox Asteroid::get_hitbox()
+Hitbox Asteroid::get_hitbox() const
 {
     uint sz;
     switch (size) {

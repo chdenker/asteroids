@@ -19,7 +19,7 @@ public:
 
     math::Vec2 get_top_position();
 
-    Hitbox get_hitbox();
+    Hitbox get_hitbox() const;
     bool has_collided_with(Hitbox h);
 
     inline double get_angle() { return angle; }

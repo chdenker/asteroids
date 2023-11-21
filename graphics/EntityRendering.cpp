@@ -29,7 +29,9 @@ void render_hitbox(Screen& scr, game::Hitbox h, Color col)
 void render_rockets(Screen& scr, std::vector<game::Rocket>& rockets)
 {
     for (game::Rocket const& r : rockets) {
-        scr.render_rectangle(r.pos.x, r.pos.y, 5, 10, { 255, 255, 255 });
+        scr.render_rectangle(r.pos.x, r.pos.y, consts::ROCKET_SIZE / 2, consts::ROCKET_SIZE, { 255, 255, 255 });
+        
+        render_hitbox(scr, r.get_hitbox(), { 255, 165, 0 });
     }
 }
 

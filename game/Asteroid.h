@@ -21,7 +21,7 @@ public:
 
     ~Asteroid() = default;
 
-    Hitbox get_hitbox();
+    Hitbox get_hitbox() const;
 
     math::Vec2 pos;
     uint angle;

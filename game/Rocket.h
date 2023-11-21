@@ -3,12 +3,16 @@
 
 #include "../Utils.h"
 
+#include "Hitbox.h"
+
 namespace game {
 
 class Rocket {
 public:
     Rocket(math::Vec2 position, double angle);
     ~Rocket() = default;
+
+    Hitbox get_hitbox() const;
 
     void update();
 

@@ -53,7 +53,7 @@ void Player::decr_angle(double val)
     }
 }
 
-Hitbox Player::get_hitbox()
+Hitbox Player::get_hitbox() const
 {
     return Hitbox{pos.x - consts::PLAYER_SIZE / 2, pos.y - consts::PLAYER_SIZE / 4, consts::PLAYER_SIZE, consts::PLAYER_SIZE};
 }
