@@ -19,5 +19,15 @@ Hitbox Asteroid::get_hitbox() const
     }
     return Hitbox{pos.x - sz / 2, pos.y - sz / 2, sz, sz};
 }
+    
+void Asteroid::explode()
+{
+    switch (size) {
+    case Size::LARGE: size = Size::MEDIUM; break;
+    case Size::MEDIUM: size = Size::SMALL; break;
+    case Size::SMALL: size = Size::DESTROYED; break;
+    case Size::DESTROYED: return;
+    }
+}
 
 } // namespace game

@@ -23,6 +23,8 @@ public:
 
     Hitbox get_hitbox() const;
 
+    void explode();
+
     math::Vec2 pos;
     uint angle;
     uint speed;
