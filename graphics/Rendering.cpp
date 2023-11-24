@@ -1,4 +1,4 @@
-#include "EntityRendering.h"
+#include "Rendering.h"
 
 #include "../Constants.h"
 
@@ -7,6 +7,11 @@
 #include <utility>
 
 namespace graphics {
+
+void render_text(Screen& scr, math::Vec2 pos, Color col, std::string text)
+{
+    scr.render_text(pos.x, pos.y, col, text);
+}
 
 std::pair<float, float> compute_centroid(std::array<Point, 4> vertices)
 {

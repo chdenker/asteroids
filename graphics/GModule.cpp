@@ -43,6 +43,13 @@ void GModule::clear(int red, int green, int blue)
 	SDL_RenderClear(renderer);
 }
 
+void GModule::render_text(int x, int y, int red, int green, int blue, char const* text)
+{
+    SDL_SetRenderDrawColor(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
+    // TODO: Render text using SDL_ttf
+    std::puts("Game over!");
+}
+
 void GModule::render_line(int x1, int y1, int x2, int y2, int red, int green, int blue)
 {
 	SDL_SetRenderDrawColor(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
@@ -97,7 +104,6 @@ void GModule::render_circle(int x0, int y0, int radius, int red, int green, int 
         }
     }
 }
-
 
 void GModule::draw()
 {

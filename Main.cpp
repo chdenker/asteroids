@@ -6,14 +6,19 @@
 
 #include "graphics/Screen.h"
 #include "graphics/GModule.h"
-#include "graphics/EntityRendering.h"
+#include "graphics/Rendering.h"
 
 #include <SDL2/SDL.h>
 
+#include <SDL2/SDL_keycode.h>
 #include <memory>
 #include <vector>
 
 bool game_running = false;
+
+enum class GameState {
+    MENU, INGAME, GAMEOVER
+} state{GameState::MENU};
 
 struct Input {
     bool left;
@@ -21,6 +26,7 @@ struct Input {
     bool up;
     bool down;
     bool space;
+    bool r;
 };
 
 // TODO: Hide the SDL dependency
@@ -46,6 +52,9 @@ void process_input(Input& in)
         case SDLK_SPACE:
             in.space = true;
             break;
+        case SDLK_r:
+            in.r = true;
+            break;    
         case SDLK_ESCAPE:
             game_running = false;
             break;
@@ -87,7 +96,8 @@ void update(Input& in, game::Player& player, std::vector<game::Asteroid>& astero
     for (game::Asteroid& ast : asteroids) {
         game::Hitbox ast_hbox = ast.get_hitbox();
         if (collides_with(player_hbox, ast_hbox)) {
-            // TODO: Game over
+            state = GameState::GAMEOVER;
+            break;
         }
         for (game::Rocket& r : player.rockets) {
             game::Hitbox r_hbox = r.get_hitbox();
@@ -111,6 +121,16 @@ void update(Input& in, game::Player& player, std::vector<game::Asteroid>& astero
     in = Input{};	// Reset
 }
 
+bool handle_game_over(graphics::Screen& scr, Input& in)
+{
+    if (in.r) {
+        return true; // restart requested
+    }
+
+    graphics::render_text(scr, math::Vec2{consts::SCR_WIDTH / 2, consts::SCR_HEIGHT / 2}, { 255, 255, 255 }, "GAME OVER");
+    return false;   // no restart
+}
+
 int main()
 {
     std::unique_ptr<GModule> gmod = std::make_unique<GModule>(consts::SCR_WIDTH, consts::SCR_HEIGHT);
@@ -124,16 +144,28 @@ int main()
 
     asteroids.emplace_back(math::Vec2{400.0f, 400.0f}, 0, game::Asteroid::Size::LARGE);
 
+    state = GameState::INGAME;
+
     game_running = true;
     while (game_running) {
         process_input(in);
 
         scr.clear({0, 0, 0});
 
-        update(in, player, asteroids);
+        if (state == GameState::INGAME) {
+            update(in, player, asteroids);
 
-        graphics::render_player(scr, player);
-        for (auto& a : asteroids) graphics::render_asteroid(scr, a);
+            graphics::render_player(scr, player);
+            for (auto& a : asteroids) graphics::render_asteroid(scr, a);
+        } else if (state == GameState::GAMEOVER) {
+            bool restart_requested = handle_game_over(scr, in);
+            if (restart_requested) {
+                player = game::Player{math::Vec2{700, 300}, 0};
+                asteroids = {{math::Vec2{400.0f, 400.0f}, 0, game::Asteroid::Size::LARGE}};
+
+                state = GameState::INGAME;
+            }
+        }
 
         scr.draw();
         // SDL_Delay(60);	// TODO: Add timing logic

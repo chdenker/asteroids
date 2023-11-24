@@ -24,6 +24,7 @@ public:
     ~Screen() = default;
 
     void clear(Color col);
+    void render_text(int x, int y, Color col, std::string text);
     void render_line(Point p1, Point p2, Color col);
     void render_rectangle(int x, int y, int width, int height, Color col);
     void render_unfilled_rectangle(int x, int y, int width, int height, Color col);

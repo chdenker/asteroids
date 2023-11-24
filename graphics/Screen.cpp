@@ -12,6 +12,11 @@ void Screen::clear(Color col)
     gmod->clear(col.red, col.green, col.blue);
 }
 
+void Screen::render_text(int x, int y, Color col, std::string text)
+{
+    gmod->render_text(x, y, col.red, col.green, col.blue, text.c_str());
+}
+
 void Screen::render_line(Point p1, Point p2, Color col)
 {
     gmod->render_line(p1.x, p1.y, p2.x, p2.y, col.red, col.green, col.blue);
@@ -31,7 +36,6 @@ void Screen::render_circle(int x, int y, int radius, Color col)
 {
     gmod->render_circle(x, y, radius, col.red, col.green, col.blue);
 }
-
 
 void Screen::draw()
 {
