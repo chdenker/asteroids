@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS=-std=c++17 -pedantic -Wall -Wextra -O3
-LDFLAGS=-lSDL2
+LDFLAGS=-lSDL2 -lSDL2_ttf
 
 all: asteroids
 

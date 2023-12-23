@@ -2,8 +2,6 @@
 
 #include "../Constants.h"
 
-#include <SDL2/SDL.h>
-
 #include <cstdio>
 #include <cstdlib>
 
@@ -28,10 +26,30 @@ GModule::GModule(int width, int height)
 		SDL_Quit();
 		std::exit(-1);
 	}
+
+    if (TTF_Init() != 0) {
+        std::fprintf(stderr, "GModule ctor: TTF Initialization failed %s\n", TTF_GetError());
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        std::exit(-1);
+    }
+
+    font = TTF_OpenFont(consts::FONT_PATH, 75);
+    if (font == nullptr) {
+        std::fprintf(stderr, "GModule ctor: TTF Font Loading failed %s\n", TTF_GetError());
+        TTF_Quit();
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        std::exit(-1);
+    }
 }
 
 GModule::~GModule()
 {
+    TTF_CloseFont(font);
+    TTF_Quit();
     SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
@@ -43,11 +61,23 @@ void GModule::clear(int red, int green, int blue)
 	SDL_RenderClear(renderer);
 }
 
-void GModule::render_text(int x, int y, int red, int green, int blue, char const* text)
+void GModule::render_text(int x, int y, std::uint8_t red, std::uint8_t green, std::uint8_t blue, char const* text)
 {
-    SDL_SetRenderDrawColor(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
-    // TODO: Render text using SDL_ttf
-    std::puts("Game over!");
+    SDL_Color color{red, green, blue, SDL_ALPHA_OPAQUE};
+    SDL_Surface* surf = TTF_RenderText_Solid(font, text, color);
+    SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surf);
+
+    // TODO: (Possible performance improvement) Move this outside render_text
+    int tex_w = 0;
+    int tex_h = 0;
+    SDL_QueryTexture(tex, nullptr, nullptr, &tex_w, &tex_h);
+    SDL_Rect dstrect{x, y, tex_w, tex_h};
+
+    SDL_RenderCopy(renderer, tex, nullptr, &dstrect);
+    SDL_RenderPresent(renderer);
+
+    SDL_DestroyTexture(tex);
+    SDL_FreeSurface(surf);
 }
 
 void GModule::render_line(int x1, int y1, int x2, int y2, int red, int green, int blue)

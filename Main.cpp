@@ -10,7 +10,6 @@
 
 #include <SDL2/SDL.h>
 
-#include <SDL2/SDL_keycode.h>
 #include <memory>
 #include <vector>
 
@@ -150,13 +149,15 @@ int main()
     while (game_running) {
         process_input(in);
 
-        scr.clear({0, 0, 0});
-
         if (state == GameState::INGAME) {
+            scr.clear({0, 0, 0});
+
             update(in, player, asteroids);
 
             graphics::render_player(scr, player);
             for (auto& a : asteroids) graphics::render_asteroid(scr, a);
+
+            scr.draw();
         } else if (state == GameState::GAMEOVER) {
             bool restart_requested = handle_game_over(scr, in);
             if (restart_requested) {
@@ -167,7 +168,6 @@ int main()
             }
         }
 
-        scr.draw();
         // SDL_Delay(60);	// TODO: Add timing logic
     }
 

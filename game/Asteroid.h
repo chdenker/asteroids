@@ -6,8 +6,6 @@
 
 #include "Hitbox.h"
 
-#include <cstdint>
-
 namespace game {
 
 class Asteroid {
