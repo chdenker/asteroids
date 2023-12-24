@@ -7,9 +7,12 @@ using uint = std::uint32_t;
 
 namespace math {
 
-struct Vec2 {
+class Vec2 {
+public:
     float x;
     float y;
+
+    void rotate(double angle);
 };
 
 } // namespace math

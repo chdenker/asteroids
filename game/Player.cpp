@@ -2,6 +2,7 @@
 
 #include "../Constants.h"
 
+#include <algorithm>
 #include <cmath>
 #include <utility>
 
@@ -19,22 +20,9 @@ Player::Player(math::Vec2 position, double angle)
     rockets.reserve(consts::ROCKETS_MAX);
 }
 
-math::Vec2 Player::get_top_position()
+math::Vec2 Player::get_top_position() const
 {
-    // Get current direction vector (with length consts::PLAYER_SIZE)
-    math::Vec2 v = dir;
-    double rot_cos = std::cos(get_angle());
-    double rot_sin = std::sin(get_angle());
-    float x = v.x;
-    float y = v.y;
-    v.x = rot_cos * x - rot_sin * y;
-    v.y = rot_sin * x + rot_cos * y;
-    // ... Normalize to length consts::PLAYER_SIZE
-    float scale = consts::PLAYER_SIZE / std::hypot(v.x, v.y);
-    v.x *= scale;
-    v.y *= scale;
-    // Add direction vector to current position
-    return {pos.x + v.x, pos.y + v.y};
+    return vertices[0];    
 }
 
 void Player::incr_angle(double val)
@@ -55,7 +43,17 @@ void Player::decr_angle(double val)
 
 Hitbox Player::get_hitbox() const
 {
-    return Hitbox{pos.x - consts::PLAYER_SIZE / 2, pos.y - consts::PLAYER_SIZE / 4, consts::PLAYER_SIZE, consts::PLAYER_SIZE};
+    auto const [min_x_vertex_it, max_x_vertex_it] = std::minmax_element(vertices.begin(), vertices.end(), [](auto a, auto b){ return a.x < b.x; });
+    auto const [min_y_vertex_it, max_y_vertex_it] = std::minmax_element(vertices.begin(), vertices.end(), [](auto a, auto b){ return a.y < b.y; });
+    math::Vec2 const& min_x_vertex = *min_x_vertex_it;
+    math::Vec2 const& min_y_vertex = *min_y_vertex_it;
+    math::Vec2 const& max_x_vertex = *max_x_vertex_it;
+    math::Vec2 const& max_y_vertex = *max_y_vertex_it;
+    math::Vec2 top_left{min_x_vertex.x, min_y_vertex.y};
+    math::Vec2 bottom_right{max_x_vertex.x, max_y_vertex.y};
+    uint width = bottom_right.x - top_left.x;
+    uint height = bottom_right.y - top_left.y;
+    return Hitbox{top_left, width, height};
 }
 
 void Player::shoot()

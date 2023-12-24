@@ -6,6 +6,7 @@
 #include "Hitbox.h"
 #include "Rocket.h"
 
+#include <array>
 #include <vector>
 
 namespace game {
@@ -17,12 +18,12 @@ public:
 
     void shoot();
 
-    math::Vec2 get_top_position();
+    math::Vec2 get_top_position() const;
 
     Hitbox get_hitbox() const;
     bool has_collided_with(Hitbox h);
 
-    inline double get_angle() { return angle; }
+    inline double get_angle() const { return angle; }
     void incr_angle(double val);
     void decr_angle(double val);
 
@@ -34,6 +35,7 @@ public:
     uint score;
     uint lives;
     std::vector<Rocket> rockets;
+    std::array<math::Vec2, 4> vertices;
     
 private:
     double angle;
