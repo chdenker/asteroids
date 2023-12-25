@@ -22,8 +22,6 @@ void render_rockets(Screen& scr, std::vector<game::Rocket>& rockets)
 {
     for (game::Rocket const& r : rockets) {
         scr.render_rectangle(r.pos.x, r.pos.y, consts::ROCKET_SIZE / 2, consts::ROCKET_SIZE, { 255, 255, 255 });
-        
-        render_hitbox(scr, r.get_hitbox(), { 255, 165, 0 });
     }
 }
 
@@ -61,7 +59,6 @@ void render_player(Screen& scr, game::Player& p)
 
     render_rockets(scr, p.rockets);
 
-    render_hitbox(scr, p.get_hitbox(), { 0, 0, 255 });
     p.vertices = vertices;
 }
 
@@ -75,7 +72,6 @@ void render_asteroid(Screen& scr, game::Asteroid& ast)
     case game::Asteroid::Size::DESTROYED: return; // Don't render asteroid
     }
     scr.render_circle(ast.pos.x, ast.pos.y, radius, { 255, 255, 255 });
-    render_hitbox(scr, ast.get_hitbox(), { 255, 0, 0 });
 }
 
 } // namespace graphics

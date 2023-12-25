@@ -10,10 +10,12 @@
 
 #include <SDL2/SDL.h>
 
+#include <iostream>
 #include <memory>
 #include <vector>
 
 bool game_running = false;
+bool hitbox_rendering = true;
 
 enum class GameState {
     MENU, INGAME, GAMEOVER
@@ -53,7 +55,12 @@ void process_input(Input& in)
             break;
         case SDLK_r:
             in.r = true;
-            break;    
+            break;
+        // TODO: Why does uncommenting case SDLK_h slow the player movement down so much??
+        // case SDLK_h:
+        //     hitbox_rendering = !hitbox_rendering;
+        //     std::cout << "hitbox_rendering = " << hitbox_rendering << std::endl;
+        //     break;
         case SDLK_ESCAPE:
             game_running = false;
             break;
@@ -156,6 +163,12 @@ int main()
 
             graphics::render_player(scr, player);
             for (auto& a : asteroids) graphics::render_asteroid(scr, a);
+
+            if (hitbox_rendering) {
+                graphics::render_hitbox(scr, player.get_hitbox(), { 0, 0, 255 });
+                for (auto& r : player.rockets) render_hitbox(scr, r.get_hitbox(), { 255, 165, 0 });
+                for (auto& a : asteroids) render_hitbox(scr, a.get_hitbox(), { 255, 0, 0 });
+            }
 
             scr.draw();
         } else if (state == GameState::GAMEOVER) {
