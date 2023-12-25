@@ -83,13 +83,13 @@ void Player::update()
     while (pos.y + consts::PLAYER_SIZE < 0) pos.y = consts::SCR_HEIGHT + consts::PLAYER_SIZE;
 
     for (auto it = rockets.begin(); it != rockets.end(); ) {
-        Rocket& r = *it;    
+        Rocket& r = *it;
         r.update();
         if (r.exploded) {
             it = rockets.erase(it);
         } else {
             ++it;
-        }    
+        }
     }
 }
 
