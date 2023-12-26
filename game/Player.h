@@ -19,6 +19,7 @@ public:
     void shoot();
 
     math::Vec2 get_top_position() const;
+    math::Vec2 get_mid_position() const;
 
     Hitbox get_hitbox() const;
     bool has_collided_with(Hitbox h);

@@ -74,8 +74,8 @@ void process_input(Input& in)
 
 bool collides_with(game::Hitbox const& a, game::Hitbox const& b)
 {
-    return (a.pos.x < b.pos.x + b.width) && (a.pos.x + a.width > b.pos.x) 
-        && (a.pos.y < b.pos.y + b.height) && (a.pos.y + a.height > b.pos.y);
+    float dist = std::hypot(a.pos.x - b.pos.x, a.pos.y - b.pos.y);
+    return dist < a.radius + b.radius;
 }
 
 void update(Input& in, game::Player& player, std::vector<game::Asteroid>& asteroids)

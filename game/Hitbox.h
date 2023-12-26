@@ -5,10 +5,10 @@
 
 namespace game {
 
+// Despite being called hitboxes, they are actually just circles.
 struct Hitbox {
     math::Vec2 pos;
-    uint width;
-    uint height;
+    float radius;
 };
 
 }   // namespace game

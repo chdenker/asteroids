@@ -15,7 +15,7 @@ void render_text(Screen& scr, math::Vec2 pos, Color col, std::string text)
 
 void render_hitbox(Screen& scr, game::Hitbox h, Color col)
 {
-    scr.render_unfilled_rectangle(h.pos.x, h.pos.y, h.width, h.height, col);
+    scr.render_circle(h.pos.x, h.pos.y, h.radius, col);
 }
 
 void render_rockets(Screen& scr, std::vector<game::Rocket>& rockets)

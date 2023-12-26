@@ -17,9 +17,7 @@ Hitbox Asteroid::get_hitbox() const
     case Size::SMALL: sz = consts::ASTEROID_SIZE_SMALL; break;
     default: sz = 0; break;
     }
-    uint width = sz * cosf(M_PI / 4);
-    uint height = sz * sinf(M_PI / 4);
-    return Hitbox{math::Vec2{pos.x - width / 2, pos.y - height / 2}, width, height};
+    return Hitbox{math::Vec2{pos.x, pos.y}, sz / 2.0f};
 }
     
 void Asteroid::explode()

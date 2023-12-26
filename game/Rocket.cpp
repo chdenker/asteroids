@@ -15,7 +15,7 @@ Rocket::Rocket(math::Vec2 position, double angle)
 
 Hitbox Rocket::get_hitbox() const
 {
-    return Hitbox{pos, consts::ROCKET_SIZE / 2, consts::ROCKET_SIZE};
+    return Hitbox{pos, consts::ROCKET_SIZE / 2.0f};
 }
 
 void Rocket::update()
