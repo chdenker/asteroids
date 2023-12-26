@@ -2,15 +2,12 @@
 
 #include "../Constants.h"
 
-#include <algorithm>
 #include <cmath>
-#include <utility>
 
 namespace game {
 
 Player::Player(math::Vec2 position, double angle)
 : pos{position},
-  dir{0.0f, 1.0f},
   speed{0},
   score{0},
   lives{3},
@@ -60,20 +57,10 @@ void Player::shoot()
 
 void Player::update()
 {
-    // Get current direction vector (dir_x,dir_y) first...
-    float dir_x = dir.x;
-    float dir_y = dir.y;
-    // ... then rotate by the current angle
-    double rot_cos = std::cos(angle);
-    double rot_sin = std::sin(angle);
-    float trans_x = rot_cos * dir_x - rot_sin * dir_y;
-    float trans_y = rot_sin * dir_x + rot_cos * dir_y;
-
-    // Apply translation
-    pos.x = pos.x + consts::PLAYER_ACCELERATION * trans_x;
+    pos.x = pos.x - consts::PLAYER_ACCELERATION * std::sin(angle);
     while (pos.x - consts::PLAYER_SIZE > consts::SCR_WIDTH) pos.x = -consts::PLAYER_SIZE;
     while (pos.x + consts::PLAYER_SIZE < 0) pos.x = consts::SCR_WIDTH + consts::PLAYER_SIZE;
-    pos.y = pos.y + consts::PLAYER_ACCELERATION * trans_y;
+    pos.y = pos.y + consts::PLAYER_ACCELERATION * std::cos(angle);
     while (pos.y - consts::PLAYER_SIZE > consts::SCR_HEIGHT) pos.y = -consts::PLAYER_SIZE;
     while (pos.y + consts::PLAYER_SIZE < 0) pos.y = consts::SCR_HEIGHT + consts::PLAYER_SIZE;
 

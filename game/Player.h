@@ -13,6 +13,8 @@ namespace game {
 
 class Player {
 public:
+    using RenderingOutput = std::array<math::Vec2, 4>;
+
     Player(math::Vec2 position, double angle);
     ~Player() = default;
 
@@ -31,12 +33,12 @@ public:
     void update();
 
     math::Vec2 pos;
-    math::Vec2 dir;
     int speed;
     uint score;
     uint lives;
     std::vector<Rocket> rockets;
-    std::array<math::Vec2, 4> vertices;
+    
+    RenderingOutput vertices;
     
 private:
     double angle;

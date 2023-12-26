@@ -1,7 +1,5 @@
 #include "Asteroid.h"
 
-#include <cmath>
-
 namespace game {
 
 Asteroid::Asteroid(math::Vec2 pos, uint angle, Size size, uint speed)

@@ -143,7 +143,6 @@ int main()
     graphics::Screen scr{consts::SCR_WIDTH, consts::SCR_HEIGHT, std::move(gmod)};
     Input in{};
 
-    // game::Player player{math::Vec2{500, 300}, 0};
     game::Player player{math::Vec2{700, 300}, 0};
     std::vector<game::Asteroid> asteroids{};
     asteroids.reserve(consts::MAX_ASTEROIDS);
