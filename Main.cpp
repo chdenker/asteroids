@@ -26,7 +26,7 @@ struct Input {
     bool right;
     bool up;
     bool down;
-    bool space;
+    bool space, space_held;
     bool r;
 };
 
@@ -81,6 +81,7 @@ void process_input(Input& in)
             break;
         case SDLK_SPACE:
             in.space = false;
+            in.space_held = false;
             break;
         case SDLK_r:
             in.r = false;
@@ -113,8 +114,9 @@ void update(Input& in, game::Player& player, std::vector<game::Asteroid>& astero
         player.incr_angle(consts::PLAYER_ROT_SPEED);
     }
 
-    if (in.space) {
+    if (in.space && !in.space_held) {
         player.shoot();
+        in.space_held = true;
     }
 
     player.update();
