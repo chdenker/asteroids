@@ -103,9 +103,9 @@ bool collides_with(game::Hitbox const& a, game::Hitbox const& b)
 void update(Input& in, game::Player& player, std::vector<game::Asteroid>& asteroids)
 {
     if (in.up) {
-        player.speed = consts::PLAYER_ACCELERATION;
+        player.incr_speed();
     } else if (in.down) {
-        player.speed = -consts::PLAYER_ACCELERATION;
+        player.decr_speed();
     }
 
     if (in.left) {

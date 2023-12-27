@@ -8,10 +8,10 @@ namespace game {
 
 Player::Player(math::Vec2 position, double angle)
 : pos{position},
-  speed{0},
   score{0},
   lives{3},
   rockets{},
+  speed{0},
   angle{angle}
 {
     rockets.reserve(consts::ROCKETS_MAX);
@@ -25,6 +25,19 @@ math::Vec2 Player::get_top_position() const
 math::Vec2 Player::get_mid_position() const
 {
     return vertices[2];
+}
+
+void Player::incr_speed()
+{
+    if (speed < consts::PLAYER_MAX_SPEED) {
+        speed += consts::PLAYER_ACCELERATION;
+    }    
+}
+
+void Player::decr_speed()
+{
+    speed -= consts::PLAYER_ACCELERATION;
+    if (speed < 0) speed = 0;
 }
 
 void Player::incr_angle(double val)
@@ -57,11 +70,11 @@ void Player::shoot()
 
 void Player::update()
 {
-    pos.x = pos.x - consts::PLAYER_ACCELERATION * std::sin(angle);
+    pos.x = pos.x - speed * std::sin(angle);
     while (pos.x - consts::PLAYER_SIZE > consts::SCR_WIDTH)     pos.x = -consts::PLAYER_SIZE;
     while (pos.x + consts::PLAYER_SIZE < 0)                     pos.x = consts::SCR_WIDTH + consts::PLAYER_SIZE;
 
-    pos.y = pos.y + consts::PLAYER_ACCELERATION * std::cos(angle);
+    pos.y = pos.y + speed * std::cos(angle);
     while (pos.y - consts::PLAYER_SIZE > consts::SCR_HEIGHT)    pos.y = -consts::PLAYER_SIZE;
     while (pos.y + consts::PLAYER_SIZE < 0)                     pos.y = consts::SCR_HEIGHT + consts::PLAYER_SIZE;
 

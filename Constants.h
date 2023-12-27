@@ -9,7 +9,8 @@ auto constexpr SCR_WIDTH = 1024;
 auto constexpr SCR_HEIGHT = 768;
 
 auto constexpr PLAYER_SIZE = 90;
-auto constexpr PLAYER_ACCELERATION = 3;
+auto constexpr PLAYER_ACCELERATION = 1;
+auto constexpr PLAYER_MAX_SPEED = 5;   // should be less than ROCKET_SPEED
 auto constexpr PLAYER_ROT_SPEED = 0.1;
 
 auto constexpr MAX_ASTEROIDS = 30;
