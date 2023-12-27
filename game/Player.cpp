@@ -58,11 +58,12 @@ void Player::shoot()
 void Player::update()
 {
     pos.x = pos.x - consts::PLAYER_ACCELERATION * std::sin(angle);
-    while (pos.x - consts::PLAYER_SIZE > consts::SCR_WIDTH) pos.x = -consts::PLAYER_SIZE;
-    while (pos.x + consts::PLAYER_SIZE < 0) pos.x = consts::SCR_WIDTH + consts::PLAYER_SIZE;
+    while (pos.x - consts::PLAYER_SIZE > consts::SCR_WIDTH)     pos.x = -consts::PLAYER_SIZE;
+    while (pos.x + consts::PLAYER_SIZE < 0)                     pos.x = consts::SCR_WIDTH + consts::PLAYER_SIZE;
+
     pos.y = pos.y + consts::PLAYER_ACCELERATION * std::cos(angle);
-    while (pos.y - consts::PLAYER_SIZE > consts::SCR_HEIGHT) pos.y = -consts::PLAYER_SIZE;
-    while (pos.y + consts::PLAYER_SIZE < 0) pos.y = consts::SCR_HEIGHT + consts::PLAYER_SIZE;
+    while (pos.y - consts::PLAYER_SIZE > consts::SCR_HEIGHT)    pos.y = -consts::PLAYER_SIZE;
+    while (pos.y + consts::PLAYER_SIZE < 0)                     pos.y = consts::SCR_HEIGHT + consts::PLAYER_SIZE;
 
     for (auto it = rockets.begin(); it != rockets.end(); ) {
         Rocket& r = *it;

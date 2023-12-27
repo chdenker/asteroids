@@ -20,7 +20,9 @@ public:
     ~Asteroid() = default;
 
     Hitbox get_hitbox() const;
+    uint get_quant_size() const;
 
+    void update();
     void explode();
 
     math::Vec2 pos;

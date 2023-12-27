@@ -118,6 +118,7 @@ void update(Input& in, game::Player& player, std::vector<game::Asteroid>& astero
     }
 
     player.update();
+    for (game::Asteroid& ast : asteroids) ast.update();
 
     game::Hitbox player_hbox = player.get_hitbox();
     for (game::Asteroid& ast : asteroids) {
@@ -166,7 +167,7 @@ int main()
     std::vector<game::Asteroid> asteroids{};
     asteroids.reserve(consts::MAX_ASTEROIDS);
 
-    asteroids.emplace_back(math::Vec2{400.0f, 400.0f}, 0, game::Asteroid::Size::LARGE);
+    asteroids.emplace_back(math::Vec2{400.0f, 400.0f}, 0, game::Asteroid::Size::LARGE, 1);
 
     state = GameState::INGAME;
 
@@ -193,7 +194,7 @@ int main()
             bool restart_requested = handle_game_over(scr, in);
             if (restart_requested) {
                 player = game::Player{math::Vec2{700, 300}, 0};
-                asteroids = {{math::Vec2{400.0f, 400.0f}, 0, game::Asteroid::Size::LARGE}};
+                asteroids = {{math::Vec2{400.0f, 400.0f}, 0, game::Asteroid::Size::LARGE, 1}};
 
                 state = GameState::INGAME;
             }
