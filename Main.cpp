@@ -15,7 +15,7 @@
 #include <vector>
 
 bool game_running = false;
-bool hitbox_rendering = true;
+bool hitbox_rendering = false;
 
 enum class GameState {
     MENU, INGAME, GAMEOVER
@@ -56,16 +56,37 @@ void process_input(Input& in)
         case SDLK_r:
             in.r = true;
             break;
-        // TODO: Why does uncommenting case SDLK_h slow the player movement down so much??
-        // case SDLK_h:
-        //     hitbox_rendering = !hitbox_rendering;
-        //     std::cout << "hitbox_rendering = " << hitbox_rendering << std::endl;
-        //     break;
+        case SDLK_h:
+            hitbox_rendering = !hitbox_rendering;
+            std::cout << "hitbox_rendering = " << hitbox_rendering << std::endl;
+            break;
         case SDLK_ESCAPE:
             game_running = false;
             break;
         }
         break;
+    case SDL_KEYUP:
+        switch (e.key.keysym.sym) {
+        case SDLK_LEFT:
+            in.left = false;
+            break;
+        case SDLK_RIGHT:
+            in.right = false;
+            break;
+        case SDLK_UP:
+            in.up = false;
+            break;
+        case SDLK_DOWN:
+            in.down = false;
+            break;
+        case SDLK_SPACE:
+            in.space = false;
+            break;
+        case SDLK_r:
+            in.r = false;
+            break;
+        }
+        break;    
     case SDL_QUIT:
         game_running = false;
         break;
@@ -123,8 +144,6 @@ void update(Input& in, game::Player& player, std::vector<game::Asteroid>& astero
             ++it;
         }
     }
-
-    in = Input{};	// Reset
 }
 
 bool handle_game_over(graphics::Screen& scr, Input& in)
