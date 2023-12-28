@@ -30,7 +30,7 @@ void Asteroid::explode()
     }
 }
 
-uint Asteroid::get_quant_size() const
+int Asteroid::get_quant_size() const
 {
     switch (size) {
     case Size::LARGE:       return consts::ASTEROID_SIZE_LARGE;
@@ -43,13 +43,14 @@ uint Asteroid::get_quant_size() const
 
 void Asteroid::update()
 {
+    int ast_size = get_quant_size();
     pos.x = pos.x - speed * std::sin(angle);
-    while (pos.x - get_quant_size() > consts::SCR_WIDTH)    pos.x = -consts::PLAYER_SIZE;
-    while (pos.x + get_quant_size() < 0)                    pos.x = consts::SCR_WIDTH + consts::PLAYER_SIZE;
+    while (pos.x - ast_size > consts::SCR_WIDTH)    pos.x = -ast_size;
+    while (pos.x + ast_size < 0)                    pos.x = consts::SCR_WIDTH + ast_size;
 
     pos.y = pos.y + speed * std::cos(angle);
-    while (pos.y - get_quant_size() > consts::SCR_HEIGHT)   pos.y = -consts::PLAYER_SIZE;
-    while (pos.y + get_quant_size() < 0)                    pos.y = consts::SCR_HEIGHT + consts::PLAYER_SIZE;
+    while (pos.y - ast_size > consts::SCR_HEIGHT)   pos.y = -ast_size;
+    while (pos.y + ast_size < 0)                    pos.y = consts::SCR_HEIGHT + ast_size;
 }
 
 } // namespace game
