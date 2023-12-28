@@ -135,6 +135,12 @@ void update(Input& in, game::Player& player, std::vector<game::Asteroid>& astero
                 player.score += consts::ASTEROID_SCORE;
                 r.exploded = true;
                 ast.explode();
+                ast.speed *= 2;
+                asteroids.emplace_back(ast.pos, ast.angle + M_PI / 2, ast.size, ast.speed);
+                if (ast.size == game::Asteroid::Size::SMALL) {
+                    asteroids.emplace_back(ast.pos, ast.angle + 3 * M_PI / 4, ast.size, ast.speed);
+                    asteroids.emplace_back(ast.pos, ast.angle + 5 * M_PI / 4, ast.size, ast.speed);
+                }
             }
         }
     }
