@@ -12,6 +12,8 @@ namespace graphics {
 
 void render_text(Screen& scr, math::Vec2 pos, Color col, std::string text);
 
+void render_hud(Screen& scr, game::Player& player);
+
 void render_hitbox(Screen& scr, game::Hitbox h, Color col);
 
 // Entities

@@ -4,6 +4,7 @@
 
 #include <array>
 #include <cmath>
+#include <string>
 #include <utility>
 
 namespace graphics {
@@ -11,6 +12,12 @@ namespace graphics {
 void render_text(Screen& scr, math::Vec2 pos, Color col, std::string text)
 {
     scr.render_text(pos.x, pos.y, col, text);
+}
+
+void render_hud(Screen& scr, game::Player& player)
+{
+    render_text(scr, math::Vec2{0, 0}, { 255, 255, 255 }, std::to_string(player.score));
+    render_text(scr, math::Vec2{0, consts::FONT_SIZE}, { 255, 255, 255 }, std::to_string(player.lives));
 }
 
 void render_hitbox(Screen& scr, game::Hitbox h, Color col)

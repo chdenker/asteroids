@@ -185,8 +185,9 @@ int main()
 
         if (state == GameState::INGAME) {
             scr.clear({0, 0, 0});
-
             update(in, player, asteroids);
+
+            graphics::render_hud(scr, player);
 
             graphics::render_player(scr, player);
             for (auto& a : asteroids) graphics::render_asteroid(scr, a);
@@ -197,7 +198,6 @@ int main()
                 for (auto& a : asteroids) render_hitbox(scr, a.get_hitbox(), { 255, 0, 0 });
             }
 
-            scr.draw();
         } else if (state == GameState::GAMEOVER) {
             bool restart_requested = handle_game_over(scr, in);
             if (restart_requested) {
@@ -207,6 +207,8 @@ int main()
                 state = GameState::INGAME;
             }
         }
+
+        scr.draw();
 
         // SDL_Delay(60);	// TODO: Add timing logic
     }

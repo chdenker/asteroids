@@ -25,6 +25,7 @@ auto constexpr ROCKETS_MAX = 5;
 auto constexpr ROCKET_SIZE = 10; // height of rocket; width is ROCKET_SIZE / 2
 
 auto constexpr FONT_PATH = "Roboto-Bold.ttf";
+auto constexpr FONT_SIZE = 60;
 
 } // namespace consts
 

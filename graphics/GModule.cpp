@@ -35,7 +35,7 @@ GModule::GModule(int width, int height)
         std::exit(-1);
     }
 
-    font = TTF_OpenFont(consts::FONT_PATH, 75);
+    font = TTF_OpenFont(consts::FONT_PATH, consts::FONT_SIZE);
     if (font == nullptr) {
         std::fprintf(stderr, "GModule ctor: TTF Font Loading failed %s\n", TTF_GetError());
         TTF_Quit();
@@ -74,7 +74,6 @@ void GModule::render_text(int x, int y, std::uint8_t red, std::uint8_t green, st
     SDL_Rect dstrect{x, y, tex_w, tex_h};
 
     SDL_RenderCopy(renderer, tex, nullptr, &dstrect);
-    SDL_RenderPresent(renderer);
 
     SDL_DestroyTexture(tex);
     SDL_FreeSurface(surf);
