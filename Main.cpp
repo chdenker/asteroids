@@ -11,6 +11,8 @@
 #include <SDL2/SDL.h>
 
 #include <array>
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -159,11 +161,16 @@ void handle_collisions(game::Player& player, std::vector<game::Asteroid>& astero
     }
 }
 
-void generate_level(std::vector<game::Asteroid>& asteroids, uint current_level)
+void generate_level(std::vector<game::Asteroid>& asteroids, game::Player& player, uint current_level)
 {
     uint ast_amount = asteroid_amounts[current_level];
     for (uint i = 0; i < ast_amount; ++i) {
-        asteroids.emplace_back(math::Vec2{200.0f + i * 250.0f, 400.0f}, 0, game::Asteroid::Size::LARGE, 1);
+        float ast_x, ast_y;
+        do {
+            ast_x = std::rand() % (consts::SCR_WIDTH - consts::ASTEROID_SIZE_LARGE) + consts::ASTEROID_SIZE_LARGE;
+            ast_y = std::rand() % (consts::SCR_HEIGHT - consts::ASTEROID_SIZE_LARGE) + consts::ASTEROID_SIZE_LARGE;
+        } while (std::hypot(ast_x - player.pos.x, ast_y - player.pos.y) < 2 * consts::PLAYER_SIZE + consts::ASTEROID_SIZE_LARGE);
+        asteroids.emplace_back(math::Vec2{ast_x, ast_y}, 0, game::Asteroid::Size::LARGE, 1);
     }
 }
 
@@ -187,7 +194,7 @@ void update(Input& in, game::Player& player, std::vector<game::Asteroid>& astero
 
     if (asteroids.size() == 0) {
         curr_lvl = (curr_lvl + 1) % MAX_LEVEL;
-        generate_level(asteroids, curr_lvl);
+        generate_level(asteroids, player, curr_lvl);
     }
 }
 
@@ -211,7 +218,8 @@ int main()
     std::vector<game::Asteroid> asteroids{};
     asteroids.reserve(consts::MAX_ASTEROIDS);
 
-    generate_level(asteroids, curr_lvl);
+    std::srand(std::time(nullptr));
+    generate_level(asteroids, player, curr_lvl);
 
     state = GameState::INGAME;
 
@@ -240,7 +248,7 @@ int main()
                 player = game::Player{math::Vec2{700, 300}, 0};
                 asteroids.clear();
                 curr_lvl = 0;
-                generate_level(asteroids, curr_lvl);
+                generate_level(asteroids, player, curr_lvl);
 
                 state = GameState::INGAME;
             }
