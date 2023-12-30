@@ -100,7 +100,7 @@ bool collides_with(game::Hitbox const& a, game::Hitbox const& b)
     return dist < a.radius + b.radius;
 }
 
-void update(Input& in, game::Player& player, std::vector<game::Asteroid>& asteroids)
+void handle_input(Input& in, game::Player& player)
 {
     if (in.up) {
         player.incr_speed();
@@ -118,10 +118,10 @@ void update(Input& in, game::Player& player, std::vector<game::Asteroid>& astero
         player.shoot();
         in.space_held = true;
     }
+}
 
-    player.update();
-    for (game::Asteroid& ast : asteroids) ast.update();
-
+void handle_collisions(game::Player& player, std::vector<game::Asteroid>& asteroids)
+{
     game::Hitbox player_hbox = player.get_hitbox();
     for (game::Asteroid& ast : asteroids) {
         game::Hitbox ast_hbox = ast.get_hitbox();
@@ -150,6 +150,16 @@ void update(Input& in, game::Player& player, std::vector<game::Asteroid>& astero
             }
         }
     }
+}
+
+void update(Input& in, game::Player& player, std::vector<game::Asteroid>& asteroids)
+{
+    handle_input(in, player);
+
+    player.update();
+    for (game::Asteroid& ast : asteroids) ast.update();
+
+    handle_collisions(player, asteroids);
 
     for (auto it = asteroids.begin(); it != asteroids.end(); ) {
         game::Asteroid& ast = *it;
