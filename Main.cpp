@@ -10,6 +10,7 @@
 
 #include <SDL2/SDL.h>
 
+#include <array>
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -20,6 +21,12 @@ bool hitbox_rendering = false;
 enum class GameState {
     MENU, INGAME, GAMEOVER
 } state{GameState::MENU};
+
+auto constexpr MAX_LEVEL = 6;
+std::array<uint, MAX_LEVEL> asteroid_amounts{
+   1, 2, 2, 3, 3, 3
+};
+uint curr_lvl = 0;
 
 struct Input {
     bool left;
@@ -152,6 +159,14 @@ void handle_collisions(game::Player& player, std::vector<game::Asteroid>& astero
     }
 }
 
+void generate_level(std::vector<game::Asteroid>& asteroids, uint current_level)
+{
+    uint ast_amount = asteroid_amounts[current_level];
+    for (uint i = 0; i < ast_amount; ++i) {
+        asteroids.emplace_back(math::Vec2{200.0f + i * 250.0f, 400.0f}, 0, game::Asteroid::Size::LARGE, 1);
+    }
+}
+
 void update(Input& in, game::Player& player, std::vector<game::Asteroid>& asteroids)
 {
     handle_input(in, player);
@@ -168,6 +183,11 @@ void update(Input& in, game::Player& player, std::vector<game::Asteroid>& astero
         } else {
             ++it;
         }
+    }
+
+    if (asteroids.size() == 0) {
+        curr_lvl = (curr_lvl + 1) % MAX_LEVEL;
+        generate_level(asteroids, curr_lvl);
     }
 }
 
@@ -191,7 +211,7 @@ int main()
     std::vector<game::Asteroid> asteroids{};
     asteroids.reserve(consts::MAX_ASTEROIDS);
 
-    asteroids.emplace_back(math::Vec2{400.0f, 400.0f}, 0, game::Asteroid::Size::LARGE, 1);
+    generate_level(asteroids, curr_lvl);
 
     state = GameState::INGAME;
 
@@ -218,7 +238,9 @@ int main()
             bool restart_requested = handle_game_over(scr, in);
             if (restart_requested) {
                 player = game::Player{math::Vec2{700, 300}, 0};
-                asteroids = {{math::Vec2{400.0f, 400.0f}, 0, game::Asteroid::Size::LARGE, 1}};
+                asteroids.clear();
+                curr_lvl = 0;
+                generate_level(asteroids, curr_lvl);
 
                 state = GameState::INGAME;
             }
