@@ -126,8 +126,14 @@ void update(Input& in, game::Player& player, std::vector<game::Asteroid>& astero
     for (game::Asteroid& ast : asteroids) {
         game::Hitbox ast_hbox = ast.get_hitbox();
         if (collides_with(player_hbox, ast_hbox)) {
-            state = GameState::GAMEOVER;
-            break;
+            --player.lives;
+            if (player.lives == 0) {
+                state = GameState::GAMEOVER;
+                break;
+            }
+            player.pos = math::Vec2{700.0f, 300.0f};
+            player.speed = 0;
+            player.angle = 0;
         }
         for (game::Rocket& r : player.rockets) {
             game::Hitbox r_hbox = r.get_hitbox();
@@ -171,7 +177,7 @@ int main()
     graphics::Screen scr{consts::SCR_WIDTH, consts::SCR_HEIGHT, std::move(gmod)};
     Input in{};
 
-    game::Player player{math::Vec2{700, 300}, 0};
+    game::Player player{math::Vec2{700.0f, 300.0f}, 0};
     std::vector<game::Asteroid> asteroids{};
     asteroids.reserve(consts::MAX_ASTEROIDS);
 

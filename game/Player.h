@@ -26,26 +26,23 @@ public:
     Hitbox get_hitbox() const;
     bool has_collided_with(Hitbox h);
 
-    inline int get_speed() const { return speed; }
     void incr_speed();
     void decr_speed();
 
-    inline double get_angle() const { return angle; }
     void incr_angle(double val);
     void decr_angle(double val);
 
     void update();
 
     math::Vec2 pos;
+    int speed;
+    double angle;
     uint score;
     uint lives;
     std::vector<Rocket> rockets;
     
     RenderingOutput vertices;
     
-private:
-    int speed;
-    double angle;
 };
 
 } // namespace game

@@ -8,11 +8,11 @@ namespace game {
 
 Player::Player(math::Vec2 position, double angle)
 : pos{position},
+  speed{0},
+  angle{angle},
   score{0},
   lives{3},
-  rockets{},
-  speed{0},
-  angle{angle}
+  rockets{}
 {
     rockets.reserve(consts::ROCKETS_MAX);
 }

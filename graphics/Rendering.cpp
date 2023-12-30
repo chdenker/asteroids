@@ -42,7 +42,7 @@ void render_player(Screen& scr, game::Player& p)
     };
 
     for (auto& v : vertices) {
-        v.rotate(p.get_angle());
+        v.rotate(p.angle);
         v.x *= consts::PLAYER_SIZE;
         v.y *= consts::PLAYER_SIZE;
     }
