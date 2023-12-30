@@ -1,6 +1,6 @@
 #include "Rendering.h"
 
-#include "../Constants.h"
+#include "../Vars.h"
 
 #include <array>
 #include <cmath>

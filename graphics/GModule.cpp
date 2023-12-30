@@ -1,6 +1,6 @@
 #include "GModule.h"
 
-#include "../Constants.h"
+#include "../Vars.h"
 
 #include <cstdio>
 #include <cstdlib>

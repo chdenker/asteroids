@@ -1,6 +1,20 @@
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#ifndef VARS_H
+#define VARS_H
 
+// Global variables
+namespace global {
+
+extern bool game_running;
+extern bool hitbox_rendering;
+
+extern enum class GameState {
+    MENU, INGAME, GAMEOVER
+} state;
+
+} // namespace global
+
+
+// Constants
 namespace consts {
 
 auto constexpr GAME_TITLE = "Asteroids";

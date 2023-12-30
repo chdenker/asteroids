@@ -1,7 +1,7 @@
 #ifndef ASTEROID_H
 #define ASTEROID_H
 
-#include "../Constants.h"
+#include "../Vars.h"
 #include "../Utils.h"
 
 #include "Hitbox.h"

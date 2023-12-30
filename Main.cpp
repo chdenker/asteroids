@@ -1,4 +1,5 @@
-#include "Constants.h"
+#include "Input.h"
+#include "Vars.h"
 
 #include "game/Hitbox.h"
 #include "game/Player.h"
@@ -8,8 +9,6 @@
 #include "graphics/GModule.h"
 #include "graphics/Rendering.h"
 
-#include <SDL2/SDL.h>
-
 #include <array>
 #include <cstdlib>
 #include <ctime>
@@ -17,91 +16,18 @@
 #include <memory>
 #include <vector>
 
-bool game_running = false;
-bool hitbox_rendering = false;
+namespace global {
+    bool game_running = false;
+    bool hitbox_rendering = false;
 
-enum class GameState {
-    MENU, INGAME, GAMEOVER
-} state{GameState::MENU};
+    GameState state = GameState::MENU;
+} // namespace global
 
 auto constexpr MAX_LEVEL = 6;
 std::array<uint, MAX_LEVEL> asteroid_amounts{
    1, 2, 2, 3, 3, 3
 };
 uint curr_lvl = 0;
-
-struct Input {
-    bool left;
-    bool right;
-    bool up;
-    bool down;
-    bool space, space_held;
-    bool r;
-};
-
-// TODO: Hide the SDL dependency
-void process_input(Input& in)
-{
-    SDL_Event e;
-    SDL_PollEvent(&e);
-    switch (e.type) {
-    case SDL_KEYDOWN:
-        switch (e.key.keysym.sym) {
-        case SDLK_LEFT:
-            in.left = true;
-            break;
-        case SDLK_RIGHT:
-            in.right = true;
-            break;
-        case SDLK_UP:
-            in.up = true;
-            break;
-        case SDLK_DOWN:
-            in.down = true;
-            break;
-        case SDLK_SPACE:
-            in.space = true;
-            break;
-        case SDLK_r:
-            in.r = true;
-            break;
-        case SDLK_h:
-            hitbox_rendering = !hitbox_rendering;
-            std::cout << "hitbox_rendering = " << hitbox_rendering << std::endl;
-            break;
-        case SDLK_ESCAPE:
-            game_running = false;
-            break;
-        }
-        break;
-    case SDL_KEYUP:
-        switch (e.key.keysym.sym) {
-        case SDLK_LEFT:
-            in.left = false;
-            break;
-        case SDLK_RIGHT:
-            in.right = false;
-            break;
-        case SDLK_UP:
-            in.up = false;
-            break;
-        case SDLK_DOWN:
-            in.down = false;
-            break;
-        case SDLK_SPACE:
-            in.space = false;
-            in.space_held = false;
-            break;
-        case SDLK_r:
-            in.r = false;
-            break;
-        }
-        break;    
-    case SDL_QUIT:
-        game_running = false;
-        break;
-    }
-}
 
 bool collides_with(game::Hitbox const& a, game::Hitbox const& b)
 {
@@ -137,7 +63,7 @@ void handle_collisions(game::Player& player, std::vector<game::Asteroid>& astero
         if (collides_with(player_hbox, ast_hbox)) {
             --player.lives;
             if (player.lives == 0) {
-                state = GameState::GAMEOVER;
+                global::state = global::GameState::GAMEOVER;
                 break;
             }
             player.pos = math::Vec2{700.0f, 300.0f};
@@ -221,13 +147,13 @@ int main()
     std::srand(std::time(nullptr));
     generate_level(asteroids, player, curr_lvl);
 
-    state = GameState::INGAME;
+    global::state = global::GameState::INGAME;
 
-    game_running = true;
-    while (game_running) {
+    global::game_running = true;
+    while (global::game_running) {
         process_input(in);
 
-        if (state == GameState::INGAME) {
+        if (global::state == global::GameState::INGAME) {
             scr.clear({0, 0, 0});
             update(in, player, asteroids);
 
@@ -236,13 +162,13 @@ int main()
             graphics::render_player(scr, player);
             for (auto& a : asteroids) graphics::render_asteroid(scr, a);
 
-            if (hitbox_rendering) {
+            if (global::hitbox_rendering) {
                 graphics::render_hitbox(scr, player.get_hitbox(), { 0, 0, 255 });
                 for (auto& r : player.rockets) render_hitbox(scr, r.get_hitbox(), { 255, 165, 0 });
                 for (auto& a : asteroids) render_hitbox(scr, a.get_hitbox(), { 255, 0, 0 });
             }
 
-        } else if (state == GameState::GAMEOVER) {
+        } else if (global::state == global::GameState::GAMEOVER) {
             bool restart_requested = handle_game_over(scr, in);
             if (restart_requested) {
                 player = game::Player{math::Vec2{700, 300}, 0};
@@ -250,7 +176,7 @@ int main()
                 curr_lvl = 0;
                 generate_level(asteroids, player, curr_lvl);
 
-                state = GameState::INGAME;
+                global::state = global::GameState::INGAME;
             }
         }
 

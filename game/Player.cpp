@@ -1,6 +1,6 @@
 #include "Player.h"
 
-#include "../Constants.h"
+#include "../Vars.h"
 
 #include <cmath>
 
