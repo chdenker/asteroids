@@ -11,7 +11,7 @@ Player::Player(math::Vec2 position, double angle)
   speed{0},
   angle{angle},
   score{0},
-  lives{3},
+  lives{consts::PLAYER_LIVES},
   rockets{}
 {
     rockets.reserve(consts::ROCKETS_MAX);

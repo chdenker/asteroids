@@ -96,7 +96,7 @@ void generate_level(std::vector<game::Asteroid>& asteroids, game::Player& player
             ast_x = std::rand() % (consts::SCR_WIDTH - consts::ASTEROID_SIZE_LARGE) + consts::ASTEROID_SIZE_LARGE;
             ast_y = std::rand() % (consts::SCR_HEIGHT - consts::ASTEROID_SIZE_LARGE) + consts::ASTEROID_SIZE_LARGE;
         } while (std::hypot(ast_x - player.pos.x, ast_y - player.pos.y) < 2 * consts::PLAYER_SIZE + consts::ASTEROID_SIZE_LARGE);
-        asteroids.emplace_back(math::Vec2{ast_x, ast_y}, 0, game::Asteroid::Size::LARGE, 1);
+        asteroids.emplace_back(math::Vec2{ast_x, ast_y}, 0, game::Asteroid::Size::LARGE, consts::ASTEROID_INITIAL_SPEED);
     }
 }
 
@@ -130,7 +130,9 @@ bool handle_game_over(graphics::Screen& scr, Input& in)
         return true; // restart requested
     }
 
-    graphics::render_text(scr, math::Vec2{consts::SCR_WIDTH / 2, consts::SCR_HEIGHT / 2}, { 255, 255, 255 }, "GAME OVER");
+    float text_x = consts::SCR_WIDTH / 2 - 2.5f * consts::FONT_SIZE;
+    float text_y = consts::SCR_HEIGHT / 2;
+    graphics::render_text(scr, math::Vec2{text_x, text_y}, { 255, 255, 255 }, "GAME OVER");
     return false;   // no restart
 }
 
