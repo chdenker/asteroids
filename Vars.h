@@ -22,6 +22,9 @@ auto constexpr GAME_TITLE = "Asteroids";
 auto constexpr SCR_WIDTH = 1024;
 auto constexpr SCR_HEIGHT = 768;
 
+auto constexpr UPDATES_PER_SEC = 25;
+auto constexpr SKIP_TICKS = 1000 / UPDATES_PER_SEC; // time between two ticks
+
 auto constexpr PLAYER_SIZE = 90;
 auto constexpr PLAYER_ACCELERATION = 1;
 auto constexpr PLAYER_MAX_SPEED = 5;   // should be less than ROCKET_SPEED

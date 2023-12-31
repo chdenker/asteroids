@@ -10,6 +10,7 @@
 #include "graphics/Rendering.h"
 
 #include <array>
+#include <chrono>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
@@ -151,13 +152,22 @@ int main()
 
     global::state = global::GameState::INGAME;
 
+    auto next_update = std::chrono::high_resolution_clock::now();
+    auto current_time = std::chrono::high_resolution_clock::now();
+
     global::game_running = true;
     while (global::game_running) {
+        current_time = std::chrono::high_resolution_clock::now();
+
         process_input(in);
 
         if (global::state == global::GameState::INGAME) {
             scr.clear({0, 0, 0});
-            update(in, player, asteroids);
+
+            while (next_update < current_time) {
+                update(in, player, asteroids);
+                next_update += std::chrono::milliseconds{consts::SKIP_TICKS};
+            }
 
             graphics::render_hud(scr, player);
 
@@ -184,7 +194,6 @@ int main()
 
         scr.draw();
 
-        // SDL_Delay(60);	// TODO: Add timing logic
     }
 
     return 0;
