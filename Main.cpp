@@ -33,7 +33,7 @@ uint curr_lvl = 0;
 bool collides_with(game::Hitbox const& a, game::Hitbox const& b)
 {
     float dist = std::hypot(a.pos.x - b.pos.x, a.pos.y - b.pos.y);
-    return dist < a.radius + b.radius;
+    return dist <= a.radius + b.radius;
 }
 
 void handle_input(Input& in, game::Player& player)
