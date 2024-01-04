@@ -56,7 +56,12 @@ void render_player(Screen& scr, game::Player& p)
         v.y += dy;
     }
 
-    Color col{255, 255, 255};
+    Color col;
+    if (p.is_ghost()) {
+        col = Color{0, 0, 255};
+    } else {
+        col = Color{255, 255, 255};
+    }
     scr.render_line(vertices[0], vertices[3], col); // top -> bottom right
     scr.render_line(vertices[3], vertices[2], col); // bottom right -> mid
     scr.render_line(vertices[2], vertices[1], col); // mid -> bottom left
