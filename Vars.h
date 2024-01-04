@@ -26,6 +26,8 @@ auto constexpr UPDATES_PER_SEC = 25;
 auto constexpr SKIP_TICKS = 1000 / UPDATES_PER_SEC; // time between two ticks
 
 auto constexpr PLAYER_SIZE = 90;
+auto constexpr PLAYER_INIT_X = SCR_WIDTH / 2;
+auto constexpr PLAYER_INIT_Y = SCR_HEIGHT / 2;
 auto constexpr PLAYER_ACCELERATION = 1;
 auto constexpr PLAYER_MAX_SPEED = 9;   // should be less than ROCKET_SPEED
 auto constexpr PLAYER_ROT_SPEED = 0.2;

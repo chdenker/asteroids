@@ -67,7 +67,7 @@ void handle_collisions(game::Player& player, std::vector<game::Asteroid>& astero
                 global::state = global::GameState::GAMEOVER;
                 break;
             }
-            player.pos = math::Vec2{700.0f, 300.0f};
+            player.pos = math::Vec2{consts::PLAYER_INIT_X, consts::PLAYER_INIT_Y};
             player.speed = 0;
             player.angle = 0;
             player.activate_ghostmode();
@@ -144,7 +144,7 @@ int main()
     graphics::Screen scr{consts::SCR_WIDTH, consts::SCR_HEIGHT, std::move(gmod)};
     Input in{};
 
-    game::Player player{math::Vec2{700.0f, 300.0f}, 0};
+    game::Player player{math::Vec2{consts::PLAYER_INIT_X, consts::PLAYER_INIT_Y}, 0};
     std::vector<game::Asteroid> asteroids{};
     asteroids.reserve(consts::MAX_ASTEROIDS);
 
@@ -184,7 +184,7 @@ int main()
         } else if (global::state == global::GameState::GAMEOVER) {
             bool restart_requested = handle_game_over(scr, in);
             if (restart_requested) {
-                player = game::Player{math::Vec2{700, 300}, 0};
+                player = game::Player{math::Vec2{consts::PLAYER_INIT_X, consts::PLAYER_INIT_Y}, 0};
                 asteroids.clear();
                 curr_lvl = 0;
                 generate_level(asteroids, player, curr_lvl);
