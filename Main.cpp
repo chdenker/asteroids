@@ -133,7 +133,7 @@ bool handle_game_over(graphics::Screen& scr, Input& in)
 
     float text_x = consts::SCR_WIDTH / 2 - 2.5f * consts::FONT_SIZE;
     float text_y = consts::SCR_HEIGHT / 2;
-    graphics::render_text(scr, math::Vec2{text_x, text_y}, { 255, 255, 255 }, "GAME OVER");
+    graphics::render_text(scr, math::Vec2{text_x, text_y}, { 255, 255, 255 }, "WASTED!");
     return false;   // no restart
 }
 
