@@ -61,7 +61,7 @@ void handle_collisions(game::Player& player, std::vector<game::Asteroid>& astero
     game::Hitbox player_hbox = player.get_hitbox();
     for (game::Asteroid& ast : asteroids) {
         game::Hitbox ast_hbox = ast.get_hitbox();
-        if (collides_with(player_hbox, ast_hbox)) {
+        if (!player.is_ghost() && collides_with(player_hbox, ast_hbox)) {
             --player.lives;
             if (player.lives == 0) {
                 global::state = global::GameState::GAMEOVER;
@@ -70,6 +70,7 @@ void handle_collisions(game::Player& player, std::vector<game::Asteroid>& astero
             player.pos = math::Vec2{700.0f, 300.0f};
             player.speed = 0;
             player.angle = 0;
+            player.activate_ghostmode();
         }
         for (game::Rocket& r : player.rockets) {
             game::Hitbox r_hbox = r.get_hitbox();

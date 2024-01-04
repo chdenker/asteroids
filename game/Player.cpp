@@ -2,6 +2,7 @@
 
 #include "../Vars.h"
 
+#include <chrono>
 #include <cmath>
 
 namespace game {
@@ -12,7 +13,9 @@ Player::Player(math::Vec2 position, double angle)
   angle{angle},
   score{0},
   lives{consts::PLAYER_LIVES},
-  rockets{}
+  rockets{},
+  vertices{},
+  ghost{false}
 {
     rockets.reserve(consts::ROCKETS_MAX);
 }
@@ -56,6 +59,23 @@ void Player::decr_angle(double val)
     }
 }
 
+void Player::activate_ghostmode()
+{
+    ghost = true;
+    ghost_start = std::chrono::high_resolution_clock::now();
+}
+
+Player::Duration Player::get_ghostmode_duration()
+{
+    auto current = std::chrono::high_resolution_clock::now();
+    return std::chrono::duration_cast<std::chrono::milliseconds>(current - ghost_start);
+}
+
+void Player::deactivate_ghostmode()
+{
+    ghost = false;
+}
+
 Hitbox Player::get_hitbox() const
 {
     return Hitbox{get_mid_position(), consts::PLAYER_SIZE / 2.5f};
@@ -86,6 +106,10 @@ void Player::update()
         } else {
             ++it;
         }
+    }
+
+    if (get_ghostmode_duration() > std::chrono::milliseconds{3000}) {
+        deactivate_ghostmode();
     }
 }
 
