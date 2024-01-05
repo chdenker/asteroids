@@ -20,7 +20,7 @@ Hitbox Rocket::get_hitbox() const
 
 void Rocket::update()
 {
-	pos.x = pos.x - speed * std::sin(angle);
+    pos.x = pos.x - speed * std::sin(angle);
     pos.y = pos.y + speed * std::cos(angle);
 
     if (pos.x < 0 || pos.x > consts::SCR_WIDTH) exploded = true;
