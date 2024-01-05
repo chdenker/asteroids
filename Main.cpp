@@ -11,6 +11,7 @@
 
 #include <array>
 #include <chrono>
+#include <cmath>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
