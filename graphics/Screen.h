@@ -5,6 +5,7 @@
 #include "GModule.h"
 
 #include <memory>
+#include <string>
 
 namespace graphics {
 
